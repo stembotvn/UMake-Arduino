@@ -15,14 +15,14 @@ void setup() {
 }
 void loop() {
     lcd.clear();
-    lcd.setCursor(0,5);
+    lcd.setCursor(5,0);
     lcd.print("Umake");
-    lcd.setCursor(1,4);
+    lcd.setCursor(4,1);
     lcd.print("NEGENDO");
     Umake.relay(Relay_pin, 0); // Tắt chuông báo
     while(!(Umake.readVibration(Vib_pin))){} // Chờ cho đến khi cảm biến rung bị tác động
     lcd.clear();
-    lcd.setCursor(0,4);
+    lcd.setCursor(4,0);
     lcd.print("Bao dong");
     while(!(Umake.buttonPressed(Button_pin))) // Lặp lại cho đến khi  nút nhấn được nhấn
     {
@@ -32,9 +32,9 @@ void loop() {
         delay(500);
     }
     lcd.clear();
-    lcd.setCursor(0,1);
+    lcd.setCursor(1,0);
     lcd.print("Tat chuc nang");
-    lcd.setCursor(1,3);
+    lcd.setCursor(3,1);
     lcd.print("Bao dong");
     delay(3000);
 }

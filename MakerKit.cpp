@@ -271,6 +271,77 @@ void MakerKit::setPWM(int pin, int value)
     int values = map(value,0,100,0,255);
     analogWrite(pin, values);
 }
+
+int MakerKit::leftSensor()
+{
+    pinMode(lineSensor_enable, OUTPUT);
+    int value;
+    digitalWrite(lineSensor_enable,HIGH);
+    value = analogRead(leftline_pin);
+    digitalWrite(lineSensor_enable, LOW);
+    return value;
+}
+int MakerKit::rightSensor()
+{
+    pinMode(lineSensor_enable, OUTPUT);
+    int value;
+    digitalWrite(lineSensor_enable,HIGH);
+    value = analogRead(rightline_pin);
+    digitalWrite(lineSensor_enable, LOW);
+    return value;
+}
+int MakerKit::centerSensor()
+{
+    pinMode(lineSensor_enable, OUTPUT);
+    int value;
+    digitalWrite(lineSensor_enable, HIGH);
+    value = analogRead(centerline_pin);
+    digitalWrite(lineSensor_enable, LOW);
+    return value;
+}
+
+int MakerKit::readDistance(int pin)
+{
+    int distance = 4800/(analogRead(pin)-20);
+    if(distance > 80) return 81;
+    else if(distance < 10) return 9;
+    else return distance;
+}
+void MakerKit::setUpRGB(int n, int pin)
+{
+    RGB.begin(n, pin);
+    numLed = n;
+}
+void MakerKit::setColor(int location, byte R, byte G, byte B)
+{
+    R = R > 255 ? 255 : R;
+    G = G > 255 ? 255 : G;
+    B = B > 255 ? 255 : B;
+    RGB.setPixelColor(location, RGB.Color(R,G,B));
+    RGB.show();
+}
+void MakerKit::offRGB(int location)
+{
+    RGB.setPixelColor(location, RGB.Color(0,0,0));
+    RGB.show();
+}
+void MakerKit::setAllRGB(byte R, byte G, byte B)
+{
+    R = R > 255 ? 255 : R;
+    G = G > 255 ? 255 : G;
+    B = B > 255 ? 255 : B;
+    for(int i = 0; i < numLed; i++){
+        RGB.setPixelColor(i, RGB.Color(R,G,B));
+    }
+    RGB.show();
+}
+void MakerKit::offAllRGB()
+{
+    for(int i = 0; i < numLed; i++){
+        RGB.setPixelColor(i, RGB.Color(0,0,0));
+    }
+    RGB.show();
+}
 /////////////////////////////////////
 
 void MakerKit::run()

@@ -33,6 +33,7 @@ NEGENDO Education
 #include "Scratch.h"
 #include "DHT.h"
 #include "Servo.h"
+#include "Adafruit_NeoPixel.h"
 
 //#define DEBUG 1
 //#define DEBUG_SERIAL 1
@@ -41,6 +42,11 @@ NEGENDO Education
 #define M1B 5
 #define M2A 6
 #define M2B 11
+
+#define leftline_pin        A0
+#define rightline_pin       A2
+#define centerline_pin      A1	
+#define lineSensor_enable   A3
 
 //////// define State
 #define READ_SERIAL 0 
@@ -74,6 +80,16 @@ public:
     int getAcceleromenterValue(int axis);
     int getPotentiomenterLocation(int pin);
     void setPWM(int pin, int value);
+
+    int leftSensor();
+    int rightSensor();
+    int centerSensor();
+    int readDistance(int pin);
+    void setUpRGB(int n, int pin);
+    void setColor(int location, byte R, byte G, byte B);
+    void offRGB(int location);
+    void setAllRGB(byte R, byte G, byte B);
+    void offAllRGB();
     //////////////////////////////////////////
 
     void run();
@@ -84,6 +100,7 @@ public:
 private:
 
     DHT DHTsensor = DHT(DHT11);
+    Adafruit_NeoPixel RGB = Adafruit_NeoPixel(NEO_GRB + NEO_KHZ800);
     Servo servo2;
     Servo servo3;
     Servo servo4;
@@ -110,6 +127,7 @@ private:
     unsigned char serial_buf[12]; // writing
     unsigned char serialRead;
     uint8_t command_index = 0;
+    int numLed;
 
     union
     {

@@ -34,6 +34,7 @@ NEGENDO Education
 #include "DHT.h"
 #include "Servo.h"
 #include "Adafruit_NeoPixel.h"
+#include <IRremote.h>
 
 //#define DEBUG 1
 //#define DEBUG_SERIAL 1
@@ -90,6 +91,9 @@ public:
     void offRGB(int location);
     void setAllRGB(byte R, byte G, byte B);
     void offAllRGB();
+    void enableIR(int receiverPin);
+    long readIR();
+    int vall();
     //////////////////////////////////////////
 
     void run();
@@ -101,6 +105,9 @@ private:
 
     DHT DHTsensor = DHT(DHT11);
     Adafruit_NeoPixel RGB = Adafruit_NeoPixel(NEO_GRB + NEO_KHZ800);
+    IRrecv irrecv;
+    decode_results results;
+    
     Servo servo2;
     Servo servo3;
     Servo servo4;

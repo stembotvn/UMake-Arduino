@@ -342,6 +342,19 @@ void MakerKit::offAllRGB()
     }
     RGB.show();
 }
+void MakerKit::enableIR(int receiverPin){
+    irrecv.enableIRIn(receiverPin);
+}
+
+long MakerKit::readIR(){
+    if (irrecv.decode(&results))
+    {
+        //Serial.println(results.value, HEX);
+        delay(200);
+        irrecv.resume();
+    }
+    return results.value;
+}
 /////////////////////////////////////
 
 void MakerKit::run()

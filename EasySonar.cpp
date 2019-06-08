@@ -12,6 +12,9 @@
 
 #include "EasySonar.h"
 
+EasySonar::EasySonar()
+{}
+   
 EasySonar::EasySonar(int TP, int EP)
 {
    pinMode(TP,OUTPUT);
@@ -29,17 +32,25 @@ EasySonar::EasySonar(int TP, int EP, long TO)
    Echo_pin=EP;
    Time_out=TO;
 }
-
+void EasySonar::begin(int TP,int EP,long TO)
+{
+  
+   Trig_pin=TP;
+   Echo_pin=EP;
+   Time_out=TO;
+}
 long EasySonar::Timing()
 {
+   pinMode(Trig_pin,OUTPUT);
+   pinMode(Echo_pin,INPUT);
   digitalWrite(Trig_pin, LOW);
   delayMicroseconds(2);
   digitalWrite(Trig_pin, HIGH);
   delayMicroseconds(10);
   digitalWrite(Trig_pin, LOW);
   duration = pulseIn(Echo_pin,HIGH,Time_out);
-  if ( duration == 0 ) {
-	duration = Time_out; }
+  //if ( duration == 0 ) duration = Time_out;
+
   return duration;
 }
 

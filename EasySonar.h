@@ -19,10 +19,14 @@
 class EasySonar
 {
   public:
+    EasySonar();
+
     EasySonar(int TP, int EP);
   	EasySonar(int TP, int EP, long TO);
+    void begin(int TP, int EP, long TO);
     long Timing();
     float Ranging(int sys);
+    void begin(int TP, int EP);
 
   private:
     int Trig_pin;

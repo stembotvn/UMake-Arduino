@@ -45,8 +45,8 @@ NEGENDO Education
 #define M2A 6
 #define M2B 11
 
-#define leftline_pin        A2
-#define rightline_pin       A0
+#define leftline_pin        A0
+#define rightline_pin       A2
 #define centerline_pin      A1	
 #define lineSensor_enable   A3
 
@@ -100,12 +100,13 @@ public:
     void setColor(int pin, byte R, byte G, byte B);
     void setStrip(int pin,int num,int location, byte R, byte G, byte B);
     void enableIR(int receiverPin);
-    long readIR();
-    long readIRremote(int pin) {
+    unsigned long readIR();
+    unsigned long readIRremote(int pin) {
         enableIR(pin);
         return readIR();
     }
-    int vall();
+    int getLineSensor(int pin);
+    bool readPIR(int pin) { return digitalRead(pin);}
     //////////////////////////////////////////
 
     void run();
@@ -133,6 +134,7 @@ private:
     Servo servo11;
     Servo servo12;
     bool IRenabled = false;
+    unsigned long lastIRcode;
     int State = 0;
     bool first_run = true;
     bool actionDone = false;

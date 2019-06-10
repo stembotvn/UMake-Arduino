@@ -379,17 +379,27 @@ void MakerKit::setStrip(int pin, int num,int location, byte R, byte G, byte B){
 }
 
 void MakerKit::enableIR(int receiverPin){
-    irrecv.enableIRIn(receiverPin);
+    if (receiverPin!=IR_pin) IRenabled = false;
+    if (!IRenabled) {
+    IR_pin = receiverPin;
+    irrecv.enableIRIn(IR_pin);
+    IRenabled = true;
+    }
 }
 
 long MakerKit::readIR(){
+    long IRcode; 
     if (irrecv.decode(&results))
     {
         //Serial.println(results.value, HEX);
         delay(200);
         irrecv.resume();
+        IRcode = results.value;
+       // results.value = 0;
+        return IRcode;
+
     }
-    return results.value;
+    else return 0;
 }
 /////////////////////////////////////
 
@@ -791,7 +801,7 @@ void MakerKit::readSensors(int device)
          break;
          case INFRARED:{
           int pin = readBuffer(6);
-          sendFloat(readIRremote(pin)) ;
+          sendDouble(readIRremote(pin)) ;
          }
          break;
         }

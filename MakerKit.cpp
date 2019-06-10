@@ -110,7 +110,7 @@ float MakerKit::getHumidity(int pin)
 }
 float MakerKit::getUSdistance(int trig,int echo)
 {
-    US.begin(trig,echo,3000);
+    US.begin(trig,echo,3500);
     return US.Ranging(CM);
 }
 
@@ -371,7 +371,10 @@ void MakerKit::setStrip(int pin, int num,int location, byte R, byte G, byte B){
     G = G > 255 ? 255 : G;
     B = B > 255 ? 255 : B;
     RGB.begin(num,pin);
-    RGB.setPixelColor(location, RGB.Color(R,G,B));
+    if (location>0) RGB.setPixelColor(location-1, RGB.Color(R,G,B));
+    else {
+        for (int i = 0 ; i < num;i++) RGB.setPixelColor(i, RGB.Color(R,G,B));
+    }
     RGB.show();
 }
 

@@ -76,8 +76,13 @@ public:
     void disableServo(int pin);
     void generateTone(int pin,int fr);
     void generateNote(int pin,int fr,int duration);
+    void setPWM(int pin, int value);
 
-
+    bool getDigital(int pin) {
+    pinMode(pin,INPUT);
+    return digitalRead(pin);
+    }
+    
     bool buttonPressed(int pin);
     bool readMicroswitch(int pin);
     int getGasSensor(int pin);
@@ -91,7 +96,7 @@ public:
     int getAcceleromenterValue(int axis);
     int getPotentiomenterLocation(int pin);
     float getUSdistance(int trig,int ech);
-    void setPWM(int pin, int value);
+    
     
     int leftSensor();
     int rightSensor();

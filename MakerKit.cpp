@@ -643,6 +643,7 @@ void MakerKit::runFunction(int device)
         int speed = readBuffer(6);
         turnLeft(speed);
         }break;
+
         case TURNRIGHT: {
         int speed = readBuffer(6);
         turnRight(speed);
@@ -652,10 +653,10 @@ void MakerKit::runFunction(int device)
         stop();
         } break;
        
-        case DIGITAL:{
+        case DIGITALOUT:{
         int pin = readBuffer(6);        
         pinMode(pin,OUTPUT);
-        int v = readBuffer(7);
+        byte v = readBuffer(7);
         digitalWrite(pin,v);
        }
        break;
@@ -796,7 +797,7 @@ void MakerKit::readSensors(int device)
         }
         break;
 
-       case  DIGITAL:{
+       case  DIGITALIN:{
        int pin = readBuffer(6);
         pinMode(pin,INPUT);
        sendFloat(digitalRead(pin));
@@ -804,7 +805,7 @@ void MakerKit::readSensors(int device)
         break;
         case  ANALOG:{
         int pin = readBuffer(6);
-        pinMode(pin,INPUT);
+        //pinMode(pin,INPUT);
          sendShort(analogRead(pin));
          }
          break;

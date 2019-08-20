@@ -22,8 +22,8 @@ void MakerKit::setLED(int pin, int status)
 
 void MakerKit::generateNote(int pin,int fr,int duration)
 {
-    Sound.setPin(pin);
-    Sound._playNote(fr,duration);
+    //Sound.setPin(pin);
+    //Sound._playNote(fr,duration);
 }
 bool MakerKit::buttonPressed(int pin)
 {
@@ -43,11 +43,11 @@ bool MakerKit::readMicroswitch(int pin)
     else
         return 1;
 }
-int MakerKit::getGasSensor(int pin)
+float MakerKit::getGasSensor(int pin)
 {
     int gas_value = analogRead(pin);
-    gas_value = map(gas_value,0,150,0,100);
-    return gas_value;
+    gas_value = map(gas_value,0,1024,0,100);
+    return (float)gas_value;
 }
 bool MakerKit::readTouch(int pin)
 {
@@ -58,29 +58,29 @@ bool MakerKit::readTouch(int pin)
     else 
         return 0;
 }
-int MakerKit::getSoilMoisture(int pin)
+float MakerKit::getSoilMoisture(int pin)
 {
     int moisture_value = analogRead(pin);
-    moisture_value = map(moisture_value,0,300,0,100);
-    return moisture_value;
+    moisture_value = map(moisture_value,0,1024,0,100);
+    return (float)moisture_value;
 }
-int MakerKit::getSound(int pin)
+float MakerKit::getSound(int pin)
 {
     int sound_value = analogRead(pin);
-    return sound_value;
+    return (float)sound_value;
 }
-int MakerKit::getLight(int pin)
+float MakerKit::getLight(int pin)
 {
     int light_value = analogRead(pin);
     light_value = map(light_value,0,1024,0,100);
-    return light_value;
+    return (float)light_value;
 }
 bool MakerKit::readVibration(int pin)
 {
     int vib_value = digitalRead(pin);
     return vib_value;
 }
-int MakerKit::getAcceleromenterValue(int axis)
+float MakerKit::getAcceleromenterValue(int axis)
 {
     /*
         axis = 0 ---> axis X
@@ -94,13 +94,13 @@ int MakerKit::getAcceleromenterValue(int axis)
         axis_value = analogRead(A1);
     else if(axis ==2)
         axis_value = analogRead(A2);
-    return axis_value;
+    return (float)axis_value;
 }
-int MakerKit::getPotentiomenterLocation(int pin)
+float MakerKit::getPotentiomenterLocation(int pin)
 {
     int location = analogRead(pin);
     location = map(location,0,1024,0,100);
-    return location;
+    return (float)location;
 }
 float MakerKit::getTemperature(int pin)
 {
@@ -317,6 +317,15 @@ void MakerKit::setPWM(int pin, int value)
     pinMode(pin, OUTPUT);
     int values = map(value,0,100,0,255);
     analogWrite(pin, values);
+}
+
+void MakerKit::setBuzzer(int pin, int status)
+{
+    pinMode(pin, OUTPUT);
+    if(status){
+        digitalWrite(pin, HIGH);
+    }
+    else digitalWrite(pin, LOW);
 }
 
 int MakerKit::leftSensor()
@@ -605,6 +614,12 @@ void MakerKit::runFunction(int device)
             int pin = readShort(6);
             int angle = readShort(8);
             setServo(pin,angle);
+            break;
+        }
+        case SET_BUZZER:{
+            int pin = readShort(6);
+            int status = readShort(8);
+            setBuzzer(pin,status);
             break;
         }
         case DIS_SERVO:{

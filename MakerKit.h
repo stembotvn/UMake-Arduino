@@ -77,6 +77,7 @@ public:
     void generateTone(int pin,int fr);
     void generateNote(int pin,int fr,int duration);
     void setPWM(int pin, int value);
+    void setBuzzer(int pin, int status);
 
     bool getDigital(int pin) {
     pinMode(pin,INPUT);
@@ -85,16 +86,16 @@ public:
 
     bool buttonPressed(int pin);
     bool readMicroswitch(int pin);
-    int getGasSensor(int pin);
+    float getGasSensor(int pin);
     float getTemperature(int pin);
     float getHumidity(int pin);
     bool readTouch(int pin);
     bool readVibration(int pin);
-    int getSoilMoisture(int pin);
-    int getSound(int pin);
-    int getLight(int pin);
-    int getAcceleromenterValue(int axis);
-    int getPotentiomenterLocation(int pin);
+    float getSoilMoisture(int pin);
+    float getSound(int pin);
+    float getLight(int pin);
+    float getAcceleromenterValue(int axis);
+    float getPotentiomenterLocation(int pin);
     float getUSdistance(int trig,int ech);
     
     
